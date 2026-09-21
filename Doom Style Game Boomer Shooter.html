@@ -1,0 +1,162 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Iron Depths: Hellbreak</title>
+    <link rel="stylesheet" href="./src/styles.css" />
+  </head>
+  <body>
+    <main class="app-shell">
+      <canvas id="game" width="960" height="600" aria-label="Iron Depths game view"></canvas>
+
+      <section class="hud-banner hidden" id="pauseHint">
+        <p>Press <strong>Esc</strong> to pause and return to menus.</p>
+      </section>
+
+      <section class="ui-layer" id="uiLayer">
+        <section class="screen active" id="screen-home">
+          <div class="panel hero-panel">
+            <div class="hero-copy">
+              <p class="eyebrow">Doom-style browser FPS</p>
+              <h1>Iron Depths:<br />Hellbreak</h1>
+              <p class="description">
+                Blast through a demon-held facility, scavenge ammo and keys, then reach extraction.
+              </p>
+              <div class="doom-art-preview" aria-label="Loaded DOOM sprite art preview">
+                <img src="./assets/doom/weapons.png" alt="DOOM weapon sprite sheet" />
+                <img src="./assets/doom/lost-soul.png" alt="Lost Soul sprite sheet" />
+                <span>SPRITE LIBRARY LOADED</span>
+              </div>
+            </div>
+
+            <div class="hero-actions">
+              <button id="startCampaignButton" type="button">Start Mission</button>
+              <button class="secondary" id="openEditorButton" type="button">Level Editor</button>
+              <button class="secondary" id="openStatsButton" type="button">Stats</button>
+              <button class="secondary" id="openCreditsButton" type="button">Credits</button>
+            </div>
+
+            <ul class="controls">
+              <li><span>Move</span><strong>WASD</strong></li>
+              <li><span>Look</span><strong>Mouse</strong></li>
+              <li><span>Fire</span><strong>Left Click</strong></li>
+              <li><span>Use</span><strong>E</strong></li>
+              <li><span>Weapons</span><strong>1 / 2 / 3</strong></li>
+              <li><span>Pause</span><strong>Esc</strong></li>
+            </ul>
+          </div>
+        </section>
+
+        <section class="screen" id="screen-stats">
+          <div class="panel narrow-panel">
+            <p class="eyebrow">Performance Log</p>
+            <h2>Stats</h2>
+            <div class="stats-grid" id="statsGrid"></div>
+            <div class="button-row">
+              <button class="secondary" id="resetStatsButton" type="button">Reset Stats</button>
+              <button id="backFromStatsButton" type="button">Back</button>
+            </div>
+          </div>
+        </section>
+
+        <section class="screen" id="screen-credits">
+          <div class="panel narrow-panel">
+            <p class="eyebrow">Project Notes</p>
+            <h2>Credits</h2>
+            <div class="credits-copy">
+              <p>Design, code, and level layout assembled for this browser prototype.</p>
+              <p>Gameplay takes cues from the Doom Bible: rapid forward motion, weapon tiers, ammunition, keys, doors, and combat-first exits.</p>
+              <p>Includes user-supplied DOOM sprite sheets for personal prototype use. DOOM assets remain the property of their respective rightsholders.</p>
+              <p>Built with plain HTML, CSS, Canvas, and JavaScript so it can run as a simple website.</p>
+            </div>
+            <div class="button-row">
+              <button id="backFromCreditsButton" type="button">Back</button>
+            </div>
+          </div>
+        </section>
+
+        <section class="screen" id="screen-pause">
+          <div class="panel narrow-panel">
+            <p class="eyebrow">Mission Paused</p>
+            <h2>Systems Holding</h2>
+            <p class="description">Jump back in, return home, or tune a custom map before the next run.</p>
+            <div class="button-stack">
+              <button id="resumeButton" type="button">Resume</button>
+              <button class="secondary" id="pauseToHomeButton" type="button">Main Menu</button>
+              <button class="secondary" id="pauseToEditorButton" type="button">Level Editor</button>
+            </div>
+          </div>
+        </section>
+
+        <section class="screen" id="screen-result">
+          <div class="panel narrow-panel">
+            <p class="eyebrow" id="resultEyebrow">Mission Report</p>
+            <h2 id="resultTitle">Run Complete</h2>
+            <p class="description" id="resultDescription"></p>
+            <div class="button-stack">
+              <button id="resultReplayButton" type="button">Play Again</button>
+              <button class="secondary" id="resultHomeButton" type="button">Main Menu</button>
+            </div>
+          </div>
+        </section>
+
+        <section class="screen editor-screen" id="screen-editor">
+          <div class="panel editor-panel">
+            <div class="editor-header">
+              <div>
+                <p class="eyebrow">Build Mission</p>
+                <h2>Level Editor</h2>
+              </div>
+              <div class="button-row compact">
+                <button class="secondary" id="editorBackButton" type="button">Back</button>
+                <button id="playCustomButton" type="button">Play Custom Map</button>
+              </div>
+            </div>
+
+            <div class="editor-layout">
+              <aside class="editor-sidebar">
+                <div class="tool-palette" id="toolPalette"></div>
+                <div class="button-stack">
+                  <button class="secondary" id="fillWallsButton" type="button">Border Walls</button>
+                  <button class="secondary" id="clearInteriorButton" type="button">Clear Interior</button>
+                  <button class="secondary" id="loadDefaultButton" type="button">Load Default Layout</button>
+                </div>
+                <label class="field-label" for="mapNameInput">Map Name</label>
+                <input id="mapNameInput" class="text-field" maxlength="40" value="Custom Facility" />
+              </aside>
+
+              <div class="editor-main">
+                <div class="editor-grid" id="editorGrid" aria-label="Level editor grid"></div>
+                <div class="editor-footer">
+                  <p id="editorMessage">Select a tile type, then click cells to paint the map.</p>
+                </div>
+                <label class="field-label" for="mapExport">Map Data</label>
+                <textarea id="mapExport" class="map-export" spellcheck="false"></textarea>
+                <div class="button-row">
+                  <button class="secondary" id="importMapButton" type="button">Import Text</button>
+                  <button class="secondary" id="exportMapButton" type="button">Refresh Text</button>
+                </div>
+              </div>
+            </div>
+
+            <div class="legend">
+              <span><strong>#</strong> Wall</span>
+              <span><strong>.</strong> Floor</span>
+              <span><strong>S</strong> Spawn</span>
+              <span><strong>E</strong> Exit</span>
+              <span><strong>D</strong> Door</span>
+              <span><strong>L</strong> Locked Door</span>
+              <span><strong>M</strong> Enemy</span>
+              <span><strong>A</strong> Ammo</span>
+              <span><strong>H</strong> Med</span>
+              <span><strong>R</strong> Armor</span>
+              <span><strong>K</strong> Keycard</span>
+            </div>
+          </div>
+        </section>
+      </section>
+    </main>
+    <script src="./src/main.js" defer></script>
+  </body>
+</html>
