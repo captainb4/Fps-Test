@@ -1,0 +1,32 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>HELLGATE // CLASSIC FPS PROTOTYPE</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <main id="cabinet">
+    <canvas id="screen" width="640" height="400" aria-label="Hellgate classic FPS"></canvas>
+    <section id="menu" class="overlay">
+      <div class="menu-panel">
+        <p class="kicker">UAC FIELD SIMULATION · SECTOR K-9</p>
+        <h1>HELLGATE</h1>
+        <p class="subtitle">A classic raycast FPS prototype</p>
+        <button id="start">NEW MISSION</button>
+        <button id="how" class="minor">HOW TO PLAY</button>
+        <p class="notice">Independent fan prototype. Uses user-supplied sprite sheets.</p>
+      </div>
+      <div id="instructions" class="instructions hidden">
+        <strong>WASD</strong> move · <strong>mouse / ← →</strong> look<br>
+        <strong>click / space</strong> fire · <strong>E</strong> use doors · <strong>1–3</strong> weapons · <strong>Esc</strong> pause
+      </div>
+    </section>
+    <section id="pause" class="overlay hidden"><div class="menu-panel small"><h2>PAUSED</h2><button id="resume">RESUME</button><button id="quit" class="minor">ABORT MISSION</button></div></section>
+    <section id="end" class="overlay hidden"><div class="menu-panel small"><p class="kicker" id="end-kicker">MISSION REPORT</p><h2 id="end-title">SECTOR CLEARED</h2><p id="end-copy"></p><button id="again">RUN IT AGAIN</button><button id="end-menu" class="minor">MAIN MENU</button></div></section>
+    <div id="hint">CLICK TO CAPTURE MOUSE</div>
+  </main>
+  <script src="game.js"></script>
+</body>
+</html>
